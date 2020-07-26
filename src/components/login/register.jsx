@@ -48,7 +48,7 @@ export class Register extends React.Component {
         <div className="header">Register</div>
         <div className="content">
           <div className="image">
-            <img src={loginImg} />
+            <img src={loginImg} alt="register"/>
           </div>
           <form className="form" onSubmit={this.handdleSubmit}>
             <div className="form-group">

@@ -61,7 +61,6 @@ router.post("/login", async (req, res) => {
 router.get("/me", verify, async (req, res) => {
   const token = req.headers["auth-token"];
   const { _id } = jwt.decode(token);
-
   const user = await User.findById(_id);
 
   res.send({

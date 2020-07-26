@@ -5,7 +5,7 @@ import loginImg from "../../Assets/login.png";
 const Header = () => {
     return (
         <div className="header">
-            <img src={loginImg} />
+            <img src={loginImg} alt="header"/>
         </div>
     )
 }
