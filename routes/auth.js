@@ -7,7 +7,6 @@ const verify = require("./verifyToken");
 const { v4: uuidv4 } = require('uuid');
 router.post("/register", async (req, res) => {
   //Validated the data
-
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -23,8 +22,13 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     password: hashedPassword,
   });
+
   try {
-    const savedUser = await user.save();
+    const newUser = await user.save();
+    
+    const token =  jwt.sign({ _id: newUser._id }, process.env.TOKEN_SEC);
+
+    const savedUser = {newUser, token}
     res.send(savedUser);
     // res.send({user: user._id}); if I want the id only
   } catch (err) {
@@ -34,6 +38,7 @@ router.post("/register", async (req, res) => {
 
 //LOGIN
 router.post("/login", async (req, res) => {
+  console.log(req.body)
   //Validated the data
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -47,7 +52,7 @@ router.post("/login", async (req, res) => {
   if (!validPass) return res.status(400).send("Password is wrong");
 
   //Creat and asign a token
-  const token = jwt.sign({ _id: user._id }, "klsjglksjlfjsa");
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SEC);
   res.header("auth-token", token).send(token);
 });
 

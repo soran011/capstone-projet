@@ -1,17 +1,48 @@
 import React from "react";
 import loginImg from "../../Assets/login.png";
+import axios from "axios";
 
 
 export class Register extends React.Component {
-  
-  state= {
+  state = {
     name: "",
     email: "",
-    password: ""
-  }
+    password: "",
+  };
+
+  handleChange = (event, type) => {
+    if (type === 'name') {
+      this.setState({ name: event.target.value });
+
+    }
+    if (type === 'email') {
+      this.setState({ email: event.target.value });
+
+    }
+    if (type === 'password') {
+      this.setState({ password: event.target.value });
+
+    }
+    // this.setState({ email: event.target.value });
+    // this.setState({ password: event.target.value });
+  };
+
+  handdleSubmit = (event) => {
+    event.preventDefault();
+
+    const user = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    axios.post(`http://localhost:8080/register`, user ).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
+  };
 
   render() {
-    const { name, email, password } = this.state;
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="header">Register</div>
@@ -19,25 +50,42 @@ export class Register extends React.Component {
           <div className="image">
             <img src={loginImg} />
           </div>
-          <form className="form">
+          <form className="form" onSubmit={this.handdleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" placeholder="Full Name" value={name} onChange={event => this.setState({name: event.target.value})} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                onChange={(e) => this.handleChange(e, 'name')}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" placeholder="Email" value={email} onChange={event => this.setState({email: event.target.value})}/>
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                onChange={(e) => this.handleChange(e, 'email')}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="text" name="password" placeholder="Password" value={password} onChange={event => this.setState({password: event.target.value})}/>
+              <input
+                type="text"
+                name="password"
+                placeholder="Password"
+                onChange={(e) => this.handleChange(e, 'password')}
+
+              />
+            </div>
+
+            <div className="footer">
+              <button type="submit" className="btn">
+                Register
+              </button>
             </div>
           </form>
-        </div>
-        <div className="footer">
-          <button type="button" className="btn">
-            Register
-          </button>
         </div>
       </div>
     );
