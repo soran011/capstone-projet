@@ -39,6 +39,7 @@ export class Register extends React.Component {
         password: "",
       });
     });
+   event.target.reset();
   };
 
   render() {

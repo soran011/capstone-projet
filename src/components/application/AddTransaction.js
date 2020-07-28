@@ -29,6 +29,7 @@ const AddTransaction = ({ sendTransaction }) => {
     if (type === "expense") {
       sendTransaction({ text: expenseText, amount: -Number(expenseAmount) });
     }
+
   };
   return (
     <div className="form-wrapper">

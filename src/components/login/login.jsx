@@ -28,8 +28,8 @@ export function Login({ setToken }) {
 
       setToken(res.data);
       history.push("/dashboard");
-      // window.location = '/dashboard'
     });
+    
   };
   return (
     <div className="base-container">
